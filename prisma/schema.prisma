@@ -17,7 +17,26 @@ model User {
   id        Int      @id @default(autoincrement())
   name      String   @db.VarChar(255) // Add length constraint
   email     String   @unique @db.VarChar(255) // Add length constraint
-  mobile    String   @unique @db.VarChar(20) // Assuming a length of 20 for mobile numbers
   password  String   @db.VarChar(255) // Add length constraint
   createdAt DateTime @default(now())
  }
+
+ model Seller {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255) // Add length constraint
+  email     String   @unique @db.VarChar(255) // Add length constraint
+  password  String   @db.VarChar(255) // Add length constraint
+  books     Book[]   // Reflects the relationship: A seller has multiple books
+  createdAt DateTime @default(now())
+}
+
+model Book {
+  id            Int      @id @default(autoincrement())
+  title         String   @db.VarChar(255)
+  author        String   @db.VarChar(255) // Add author
+  publishedDate DateTime // Add publishedDate
+  price         Float    // Add price
+  sellerId      Int      // Foreign key to reference the seller
+  seller        Seller   @relation(fields: [sellerId], references: [id])
+  createdAt     DateTime @default(now())
+}

@@ -9,9 +9,9 @@ const prisma = new PrismaClient();
 
 const userRegistration = async (req, res, next) => {
   try {
-    const { name, email, mobile, password } = req.body;
+    const { name, email, password } = req.body;
 
-    if (!name || !email || !mobile || !password) {
+    if (!name || !email || !password) {
       return res.status(401).send("all fields are mandatory");
     }
 
@@ -30,12 +30,10 @@ const userRegistration = async (req, res, next) => {
       data: {
         name: name,
         email: email,
-        mobile: mobile,
         password: hashPassword,
       },
     });
 
-    const token = jwt.sign();
 
     res.status(201).send({
       message: "User registered successfully!",
@@ -58,10 +56,7 @@ const userLogin = async (req, res, next) => {
     });
     if (!userExist) {
       return res.status(401).send("please enter valied credential!");
-    } else {
-        //I want to console log the usar nme from databse here
-      console.log({ name:  userExist.name});
-    }
+    } 
     const isPassValied = await bcrypt.compare(password, userExist.password);
     if (!isPassValied) {
       return res.status(401).send("please enter valied credential!");
@@ -74,8 +69,7 @@ const userLogin = async (req, res, next) => {
       token,
       userId: userExist.id,
       name: userExist.name,
-      email: userExist.email,
-      mobile: userExist.mobile,
+      email: userExist.email
     });
   } catch (error) {
     console.error(error);

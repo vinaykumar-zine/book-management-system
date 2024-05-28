@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-const { userRegistration, userLogin } = require("../controllers/user");
+const { sellerRegistration, sellerLogin } = require("../controllers/seller");
 
 router.post('/', (req, res) => {
     res.status(200).send("You are in user route");
 });
 
-router.post('/register', userRegistration);
-router.post('/login', userLogin);
+router.post('/register', sellerRegistration);
+router.post('/login', sellerLogin);
 
 module.exports = router;
