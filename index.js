@@ -4,6 +4,8 @@ const dotenv = require('dotenv');
 const userRouter = require('./routes/user');
 const sellerRouter = require('./routes/seller');
 const booksRouter = require('./routes/books');
+const {verifyAuth} = require('./middlewares/verifyAuth');
+
 
 dotenv.config();
 
@@ -17,7 +19,7 @@ app.use(express.json());
 // api routes
 app.use("/api/user", userRouter);
 app.use('/api/seller', sellerRouter);
-app.use("/api/books", booksRouter);
+app.use("/api/books", verifyAuth, booksRouter);
 
 
 app.listen(port, () => {

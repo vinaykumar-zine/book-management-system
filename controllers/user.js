@@ -34,7 +34,6 @@ const userRegistration = async (req, res, next) => {
       },
     });
 
-
     res.status(201).send({
       message: "User registered successfully!",
       user: newUser,
@@ -56,7 +55,7 @@ const userLogin = async (req, res, next) => {
     });
     if (!userExist) {
       return res.status(401).send("please enter valied credential!");
-    } 
+    }
     const isPassValied = await bcrypt.compare(password, userExist.password);
     if (!isPassValied) {
       return res.status(401).send("please enter valied credential!");
@@ -69,7 +68,7 @@ const userLogin = async (req, res, next) => {
       token,
       userId: userExist.id,
       name: userExist.name,
-      email: userExist.email
+      email: userExist.email,
     });
   } catch (error) {
     console.error(error);
